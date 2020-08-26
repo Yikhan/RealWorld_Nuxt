@@ -1,4 +1,4 @@
-import {request} from '@/plugins/request'
+import { request } from '@/plugins/request'
 
 // 用户登录
 export const login = (data) => {
@@ -31,5 +31,13 @@ export const unfollowUser = (username) => {
   return request({
     method: 'DELETE',
     url: `/api/profiles/${username}/follow`
+  })
+}
+
+// 获取profile
+export const getProfile = (username) => {
+  return request({
+    method: 'GET',
+    url: `/api/profiles/${username}`
   })
 }

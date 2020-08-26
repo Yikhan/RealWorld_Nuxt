@@ -89,7 +89,7 @@ export default {
         }
       }
 
-      const { data } = await addComment(this.article.slug, params)
+      await addComment(this.article.slug, params)
       // 清空评论输入框
       this.commentBody = ''
       // 重新载入评论

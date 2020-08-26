@@ -28,11 +28,11 @@
         active: author.following
       }"
       @click="onFollow(author)"
-      :disabled="author.followDisabled"
+      :disabled="author.followDisabled || user.username === author.username"
     >
       <i class="ion-plus-round"></i>
       &nbsp;
-      {{ author.following ? `Unfollow ${author.username}` : `Follow ${author.username}`  }}
+      {{ author.following ? `Unfollow ${author.username}` : `Follow ${author.username}` }}
     </button>
     &nbsp;&nbsp;
     <button
@@ -52,6 +52,7 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
 import { onFavorite } from '@/utils/article'
 import { onFollow } from '@/utils/user'
 
@@ -66,6 +67,8 @@ export default {
   },
 
   computed: {
+    ...mapState(['user']),
+
     author() {
       return this.article.author
     }

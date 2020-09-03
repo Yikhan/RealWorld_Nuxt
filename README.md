@@ -20,6 +20,7 @@
 "dev": "nuxt"
 "build": "nuxt build"
 "start": "nuxt start"
+"generate": "nuxt generate"
 ```
 
 运行`npm run dev`或者`yarn dev`即可直接启动项目

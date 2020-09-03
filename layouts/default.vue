@@ -73,7 +73,7 @@
 import { mapState } from 'vuex'
 
 export default {
-  name: 'LayoutIndex',
+  name: 'Layout',
   computed: {
     ...mapState(['user'])
   }

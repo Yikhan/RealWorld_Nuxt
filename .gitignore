@@ -1,4 +1,5 @@
-.vscode/
-.nuxt/
-node_modules/
+.vscode
+.nuxt
+node_modules
+dist
 

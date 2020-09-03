@@ -86,8 +86,8 @@
               <button
                 class="btn btn-outline-primary btn-sm pull-xs-right"
                 :class="{active: article.favorited}"
-                @click="onFavorite(article)"
                 :disabled="article.favoriteDisabled"
+                @click="onFavorite(article)"
               >
                 <i class="ion-heart"></i>
                 {{article.favoritesCount}}

@@ -12,6 +12,13 @@
       <div class="row article-content">
         <div class="col-md-12" v-html="article.body"></div>
       </div>
+      <ul class="tag-list">
+        <li
+          class="tag-default tag-pill tag-outline"
+          v-for="tag in article.tagList"
+          :key="tag"
+        >{{ tag }}</li>
+      </ul>
 
       <hr />
 
@@ -21,7 +28,7 @@
 
       <div class="row">
         <div class="col-xs-12 col-md-8 offset-md-2">
-          <article-comment :article="article"/>
+          <article-comment :article="article" />
         </div>
       </div>
     </div>
@@ -43,7 +50,8 @@ export default {
     ArticleComment
   },
 
-  head() { // 设置meta数据，优化SEO
+  head() {
+    // 设置meta数据，优化SEO
     return {
       title: `${this.article.title} - RealWorld`,
       meta: [

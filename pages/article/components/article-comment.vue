@@ -41,13 +41,16 @@
           class="comment-author"
         >{{comment.author.username}}</nuxt-link>
         <span class="date-posted">{{ comment.createdAt | date('MMM DD, YYYY') }}</span>
+        <span class="mod-options" v-if="comment.author.username === user.username">
+          <i class="ion-trash-a" @click="onDeleteComment(article.slug, comment.id)"></i>
+        </span>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import { getComments, addComment } from '@/api/article'
+import { getComments, addComment, deleteComment } from '@/api/article'
 import { mapState } from 'vuex'
 import { verifyAvatar } from '@/utils/user'
 
@@ -73,6 +76,13 @@ export default {
   },
 
   methods: {
+    async onDeleteComment(slug, id) {
+      // call删除评论api
+      await deleteComment(slug, id)
+      // 从当前评论数组中删除该评论来更新视图
+      this.comments = this.comments.filter(c => c.id !== id)
+    },
+
     async loadComments() {
       const { data } = await getComments(this.article.slug)
 

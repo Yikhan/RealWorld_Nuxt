@@ -85,3 +85,10 @@ export const addComment = (slug, params) => {
   })
 }
 
+// 删除评论
+export const deleteComment = (slug, id) => {
+  return request({
+    method: 'DELETE',
+    url: `/api/articles/${slug}/comments/${id}`
+  })
+}

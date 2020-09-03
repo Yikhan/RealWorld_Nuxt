@@ -43,6 +43,11 @@ module.exports = {
         name: 'article',
         component: resolve(__dirname, 'pages/article/')
       },
+      {
+        name: '404',
+        path: '*',
+        component: resolve(__dirname, 'pages/404')
+      }
     ])
     }
   },

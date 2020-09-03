@@ -47,7 +47,11 @@
 </template>
 
 <script>
-import { addArticle } from '@/api/article'
+import {
+  addArticle,
+  getArticle,
+  updateArticle
+} from '@/api/article'
 
 export default {
   // 在路由匹配前先执行中间件
@@ -60,7 +64,28 @@ export default {
       title: '',
       description: '',
       body: '',
-      tags: ''
+      tags: '',
+      slug: ''
+    }
+  },
+
+  async asyncData({ params }) {
+    const { slug } = params
+
+    if (!slug) return
+
+    const {
+      data: { article }
+    } = await getArticle(slug)
+
+    return {
+      article
+    }
+  },
+
+  mounted() {
+    if (this.article) {
+      this.mapArticle(this.article)
     }
   },
 
@@ -74,10 +99,25 @@ export default {
           tagList: this.tags.split(',')
         }
       }
-      const { data } = await addArticle(params)
-      const slug = data.article.slug
+
+      if (this.slug) {
+        // 修改文章
+        await updateArticle(this.slug, params)
+      } else {
+        // 发布新文章
+        const { data } = await addArticle(params)
+        this.slug = data.article.slug
+      }
       // 跳转到新发的文章页面
-      this.$router.push(`/article/${slug}`)
+      this.$router.push(`/article/${this.slug}`)
+    },
+
+    mapArticle(article) {
+      this.title = article.title
+      this.description = article.description
+      this.body = article.body
+      this.tags = article.tagList.join(', ')
+      this.slug = article.slug
     }
   }
 }

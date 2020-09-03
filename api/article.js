@@ -35,6 +35,23 @@ export const addArticle = (params) => {
   })
 }
 
+// 修改文章
+export const updateArticle = (slug, params) => {
+  return request({
+    method: 'PUT',
+    url: `/api/articles/${slug}`,
+    data: params
+  })
+}
+
+// 删除文章
+export const deleteArticle = (slug) => {
+  return request({
+    method: 'DELETE',
+    url: `/api/articles/${slug}`
+  })
+}
+
 // 添加点赞
 export const addFavorite = (slug) => {
   return request({

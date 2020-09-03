@@ -23,6 +23,7 @@
       <span class="date">{{ article.createdAt | date('MMM DD, YYYY') }}</span>
     </div>
     <button
+      v-if="author.username !== user.username"
       class="btn btn-sm btn-outline-secondary"
       :class="{
         active: author.following
@@ -34,8 +35,22 @@
       &nbsp;
       {{ author.following ? `Unfollow ${author.username}` : `Follow ${author.username}` }}
     </button>
-    &nbsp;&nbsp;
+    <nuxt-link
+      v-else
+      class="btn btn-sm btn-outline-secondary"
+      :to="{
+        name: 'editor',
+        params: {
+          slug: article.slug
+        }
+      }"
+    >
+      <i class="ion-edit"></i>
+      &nbsp;
+      Edit Article
+    </nuxt-link>&nbsp;&nbsp;
     <button
+      v-if="author.username !== user.username"
       class="btn btn-sm btn-outline-primary"
       :class="{
         active: article.favorited
@@ -48,11 +63,25 @@
       Favorite Post
       <span class="counter">({{ article.favoritesCount }})</span>
     </button>
+    <button
+      v-else
+      class="btn btn-sm btn-outline-danger"
+      :class="{
+        active: article.favorited
+      }"
+      @click="onDeleteArticle(article)"
+      :disabled="isDeleting"
+    >
+      <i class="ion-trash-a"></i>
+      &nbsp;
+      Delete Post
+    </button>
   </div>
 </template>
 
 <script>
 import { mapState } from 'vuex'
+import { deleteArticle } from '@/api/article'
 import { onFavorite } from '@/utils/article'
 import { onFollow } from '@/utils/user'
 
@@ -66,6 +95,12 @@ export default {
     }
   },
 
+  data() {
+    return {
+      isDeleting: false
+    }
+  },
+
   computed: {
     ...mapState(['user']),
 
@@ -76,7 +111,14 @@ export default {
 
   methods: {
     onFavorite,
-    onFollow
+    onFollow,
+    async onDeleteArticle(article) {
+      const {slug} = article
+      this.isDeleting = true
+      await deleteArticle(slug)
+      this.isDeleting = false
+      this.$router.push('/')
+    }
   },
 
   mounted() {

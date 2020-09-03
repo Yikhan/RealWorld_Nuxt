@@ -41,3 +41,11 @@ export const getProfile = (username) => {
     url: `/api/profiles/${username}`
   })
 }
+
+export const updateUser = (data) => {
+  return request({
+    method: 'PUT',
+    url: '/api/user',
+    data
+  })  
+}

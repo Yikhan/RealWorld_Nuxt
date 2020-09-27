@@ -56,5 +56,11 @@ module.exports = {
   plugins: [
     '~/plugins/request.js',
     '~/plugins/time.js'
-  ]
+  ],
+
+  // 服务器部署
+  server: {
+    host: '0.0.0.0',
+    port: 3000
+  }
 }

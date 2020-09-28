@@ -1,8 +1,8 @@
 name: Publish And Deploy Demo
-on:
+on: 
   push:
     tags:
-      - 'v*'
+      - v*
 
 jobs:
   build-and-deploy:
@@ -16,10 +16,10 @@ jobs:
     # 打包构建
     - name: Build
       uses: actions/setup-node@master
-    - run: npm install -g yarn # 安装yarn
+   
     - run: yarn install
     - run: yarn build
-    - run: tar -zcvf release.tgz .nuxt static nuxt.config.js package.json yarn.lock ecosystem.config.js
+    - run: tar -zcvf release.tgz .nuxt nuxt.config.js package.json yarn.lock ecosystem.config.js
 
     # 发布 Release
     - name: Create Release
